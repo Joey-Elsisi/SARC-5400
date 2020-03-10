@@ -2,9 +2,232 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Is Owning a Dog Worse than Owning an SUV?</title>
+    <style>
+        hr {
+            display: block;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            margin-left: auto;
+            margin-right: auto;
+            border-style: inset;
+            border-width: 2px;
+        }
+
+        h1 {
+            font-family: "Lucida Sans Unicode";
+            line-height: 1px;
+        }
+
+        rect {
+            stroke: white;
+        }
+
+        text {
+            font-family: "Lucida Sans Unicode";
+            font: 10px;
+            fill: white;
+            text-anchor: end;
+            opacity: 0.7;
+        }
+
+        p {
+            font-family: "Lucida Sans Unicode";
+        }
+        rect.LARGE.DOG{
+            fill: #a86932;
+        }
+        rect.MEDIUM-SIZED.DOG{
+            fill:#e1a255;
+        }
+        rect.TOYOTA.LAND.CRUISER{
+            fill:#c71252;
+        }
+        rect.VOLKSWAGEN.GOLF{
+            fill:#810f34;
+        }
+        rect.CAT{
+            fill:orange;
+        }
+
+        .title
+        {
+            font-size: 25px;
+            text-anchor: end;
+            opacity: 0.7;
+        }
+        .subtitel{
+
+        }
+        .line1{
+            stroke: white;
+        }
+        .line2{
+            stroke: white;
+        }
+        /*.rotate{*/
+        /*    transform: rotate(90deg);*/
+        /*    text-anchor: end;*/
+        /*    stroke: blue;*/
+        /*}*/
+
+    </style>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script type="application/javascript">
+        var data;
+
+        function getData() {
+            d3.csv("land_guzzlers_data/land_guzzlers.csv").then(function (d) {
+                data = d;
+                draw();
+            });
+        }
+
+        //my base variables
+        var cornerX, cornerY;
+        var offset, baseline;
+
+        function draw() {
+            var drawArea = d3.select("#graphic");
+            cornerX = 0;
+            baseline = 1000;
+
+            //now draw the rectangles
+            var rectanges = drawArea.selectAll("rect").data(data).enter().append("rect")
+
+                .attr("width", function (d) {
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return offset;
+                })
+                .attr("height", function (d) {
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return offset;
+                }) //not sure if this is carried in the scope
+                .attr("x", 0)
+                .attr("y", function (d) {
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return baseline - offset;
+                })
+                .attr("class", function (d) {
+                    return d["title"];
+                });
+            var names = drawArea.selectAll(".title").data(data).enter().append("text")
+            .attr("x", function (d) {
+                offset = Math.sqrt(Number(d["footprint"])) * 900;
+                return offset - 2;
+            })
+            .attr("y", function(d){
+                offset = Math.sqrt(Number(d["footprint"])) * 900;
+                return baseline - offset + 23;
+            })
+            .attr("class", "title")
+            .text(function(d){
+                return d["title"];
+            });
+            var sub = drawArea.selectAll(".subtitle").data(data).enter().append("text")
+                .attr("x", function (d) {
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return offset - 30;
+                })
+                .attr("y", function(d){
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return baseline - offset + 40;
+                })
+                .attr("class", "subtitle")
+                .text(function(d){
+                    return d["subtitle"];
+                });
+            var sub_1 = drawArea.selectAll(".subtitle2").data(data).enter().append("text")
+                .attr("x", function (d) {
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return offset - 30;
+                })
+                .attr("y", function(d){
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return baseline - offset + 55;
+                })
+                .attr("class", "subtitle2")
+                .text(function(d){
+                    return d["subtitle2"];
+                });
+            var sub_1 = drawArea.selectAll(".subtitle3").data(data).enter().append("text")
+                .attr("x", function (d) {
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return offset - 30;
+                })
+                .attr("y", function(d){
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return baseline - offset + 71;
+                })
+                .attr("class", "subtitle2")
+                .text(function(d){
+                    return d["subtitle3"];
+                });
+            var sub_2 = drawArea.selectAll(".line").data(data).enter().append("line")
+                .attr("x1", function (d) {
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return offset - 323;
+                })
+                .attr("y1", function(d){
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return baseline - offset + 25;
+                })
+                .attr("x2", function (d) {
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return offset - 25;
+                })
+                .attr("y2", function(d){
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return baseline - offset + 25;
+                })
+                .attr("class", "line1");
+
+            var sub_2 = drawArea.selectAll(".line2").data(data).enter().append("line")
+                .attr("x1", function (d) {
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return offset - 25;
+                })
+                .attr("y1", function(d){
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return baseline - offset + 25;
+                })
+                .attr("x2", function (d) {
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return offset - 25;
+                })
+                .attr("y2", function(d){
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return baseline - offset + 100;
+                })
+                .attr("class", "line2");
+
+            //todo could not get this code to work :(
+            var sub_1 = drawArea.selectAll(".rotate").data(data).enter().append("text")
+                .attr("x", function (d) {
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return offset - 15;
+                })
+                .attr("y", function(d){
+                    offset = Math.sqrt(Number(d["footprint"])) * 900;
+                    return baseline - offset + 260;
+                })
+                // .attr("transform", "rotate(90)")
+                .attr("class", "rotate")
+                .attr("writing-mode", "tb-rl")
+                .text(function(d){
+                    return "Eco-footprint: " + d["footprint"] + "hectares";
+                });
+        }
+    </script>
+
 </head>
-<body>
+<body onload="getData()">
+<hr>
+<h1>Land guzzlers</h1>
+<p>The ecological footprints of our pets can make SUVs look positively eco-friendly</p>
+<svg id="graphic" width="1150" height="1150">
+</svg>
 
 </body>
 </html>
